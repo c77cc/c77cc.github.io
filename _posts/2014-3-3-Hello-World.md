@@ -3,7 +3,6 @@ layout: post
 title: go test 外部服务的“麻烦”解决办法
 ---
 
-### go test 外部服务的“麻烦”解决办法
 
 咱们在写golang的unit test时，经常会碰到依赖一些外部服务；比如依赖第三方HTTP接口、redis server、TCP server
 

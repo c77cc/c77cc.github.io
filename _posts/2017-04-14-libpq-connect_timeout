@@ -1,3 +1,7 @@
+---
+layout: post
+title: github.com/lib/pq connect_timeout的一个问题
+---
 
 前两天项目报了了个BUG，它占着PG几十条链接一直不释放，导致控制台打不开；
 

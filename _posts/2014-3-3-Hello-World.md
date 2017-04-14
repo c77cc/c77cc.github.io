@@ -63,7 +63,7 @@ func TestGetOAuthToken(t *testing.T) {
 
 还是上例子
 
-```
+```golang
 type TestRedisHandler struct {
     addr string
     server *redcon.Server

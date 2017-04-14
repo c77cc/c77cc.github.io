@@ -13,7 +13,7 @@ title: github.com/lib/pq connect_timeout的一个问题
 
 **connect_timeout** 这参数在 **github.com/lib/pq**这个pkg里边，来看看它是怎么用的吧
 
-```
+```golang
 func dial(d Dialer, o values) (net.Conn, error) {
 	ntw, addr := network(o)
 	// SSL is not necessary or supported over UNIX domain sockets
@@ -49,7 +49,7 @@ func dial(d Dialer, o values) (net.Conn, error) {
 
 那么问题来了，当发生timeout时，database/sql难道没有释放关闭链接么，上代码(Golang 1.7.4 line-822)
 
-```
+```golang
 	db.numOpen++ // optimistically
 	db.mu.Unlock()
 	ci, err := db.driver.Open(db.dsn)
@@ -82,7 +82,7 @@ func dial(d Dialer, o values) (net.Conn, error) {
 
 lib/pq/conn.go line-206
 
-```
+```golang
 	c, err := dial(d, o)
 	if err != nil {
 		return nil, err
@@ -102,7 +102,7 @@ lib/pq/conn.go line-206
 
 原来在cn.startup里边，接着转移
 
-```
+```golang
 	for {
 		t, r := cn.recv()
 		switch t {
@@ -113,7 +113,7 @@ lib/pq/conn.go line-206
 
 ```
 
-```
+```golang
 func (cn *conn) recv() (t byte, r *readBuf) {
 	for {
 		var err error
@@ -138,7 +138,7 @@ func (cn *conn) recv() (t byte, r *readBuf) {
 
 还记得前面的**conn.SetDeadline**么，如果设置了这个超时时间，那么recv里边肯定会超时的，一旦超时，抛出的异常会在上层被捕获，最后回到
 
-```
+```golang
     ci, err := db.driver.Open(db.dsn)
 	if err != nil {
 		db.mu.Lock()

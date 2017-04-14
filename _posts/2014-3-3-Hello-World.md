@@ -17,7 +17,7 @@ title: go test 外部服务的“麻烦”解决办法
 
 举个简单的例子（代码意思下，未必能跑通）
 
-```
+```golang
 import (
     "net/http"
     "net/http/httptest"
